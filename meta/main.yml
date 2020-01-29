@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-
+  role_name: grubcmdline
   author: Will Szumski
   description: Sets the default kernel command line
 
