@@ -1,29 +1,44 @@
 stackhpc.grubcmdline
-=========
+====================
 
 Sets the default kernel command line
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+grub
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Please see `defaults/main.yml`
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None
 
 Example Playbook
 ----------------
 
-    - hosts: servers
-      roles:
-         - { role: stackhpc.grubcmdline, var_name: 42 }
+```
+- name: Enable huge pages
+  hosts: compute-hugepages
+  vars:
+    kernel_cmdline:
+      - transparent_hugepage=never
+      - default_hugepagesz=2M
+      - hugepagesz=2M
+      - hugepages=184320
+    kernel_cmdline_remove:
+      - hugepage
+  tasks:
+    - include_role:
+        name: stackhpc.grubcmdline
+  handlers:
+    - name: reboot
+      include_tasks: tasks/reboot.yml
+```
 
 License
 -------

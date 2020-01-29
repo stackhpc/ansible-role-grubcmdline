@@ -1,5 +1,1 @@
----
-- name: Converge
-  hosts: all
-  roles:
-    - role: stackhpc.grubcmdline
+../default/playbook.yml
