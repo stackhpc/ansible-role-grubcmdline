@@ -1,2 +1,10 @@
 ---
-# defaults file for stackhpc.grubcmdline
+
+# list of parameters to add to the kernel cmdline
+kernel_cmdline: []
+
+# list of regexs to match against kernel paramerters. Any matches aci_rest
+# removed.
+kernel_cmdline_remove: []
+
+kernel_restart_handler: reboot
