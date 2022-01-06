@@ -59,7 +59,7 @@
   register: grub_mkconfig_result
   become: true
   changed_when: false
-  when: ansible_os_family == "RedHat"
+  when: ansible_facts.os_family == "RedHat"
 
 - name: replace current grub config (RedHat)
   copy:
@@ -74,9 +74,9 @@
     - /etc/grub2.cfg
     - /etc/grub2-efi.cfg
   notify: "{{ kernel_restart_handler }}"
-  when: ansible_os_family == "RedHat"
+  when: ansible_facts.os_family == "RedHat"
 
 - name: Generate new grub config (Ubuntu/Debian)
   command: /usr/sbin/update-grub
   become: true
-  when: ansible_os_family == "Debian"
+  when: ansible_facts.os_family == "Debian"
