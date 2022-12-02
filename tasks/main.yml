@@ -51,7 +51,7 @@
     path: /etc/default/grub
     regexp: '^GRUB_CMDLINE_LINUX_DEFAULT'
     line: GRUB_CMDLINE_LINUX_DEFAULT="{{ grub_cmdline_linux_new | join(' ') }}"
-    backup: true
+    backup: "{{ backup_grub_config_file }}"
   become: true
 
 - name: Generate new grub-config
@@ -62,7 +62,7 @@
 
 - name: replace current grub config
   copy:
-    backup: true
+    backup: "{{ backup_grub_config_file }}"
     # /etc/grub2.cfg -> ../boot/grub2/grub.cfg
     follow: true
     content: "{{ grub_mkconfig_result.stdout }}"
