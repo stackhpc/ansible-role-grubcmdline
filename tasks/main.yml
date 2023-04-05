@@ -79,3 +79,10 @@
   register: grub_update_result
   loop: "{{ grub_search.results }}"
   notify: "{{ kernel_restart_handler }}"
+
+- name: Update /boot/loader/entries with grubby
+  # NOTE: This is the new fangled way: https://unix.stackexchange.com/questions/557841/what-is-the-correct-way-to-handle-default-kernelopts-in-fedora-31
+  # As grub reads configuration from /boot/loader/entries/.
+  command: grubby --update-kernel=ALL --args='{{ grub_cmdline_linux_new | join(" ") }}' --remove-args '{{ grub_cmdline_linux_remove | join(" ") }}'
+  changed_when: false
+  become: true
