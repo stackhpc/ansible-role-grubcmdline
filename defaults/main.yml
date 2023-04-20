@@ -12,8 +12,3 @@ kernel_restart_handler: reboot
 # optionally skip backing up the config file. Can cause issues on some
 # filesystems due to filenames containing illegal characters
 backup_grub_config_file: true
-
-# Grub configuration files to replace
-grub_configuration_files:
-    - /etc/grub2.cfg
-    - /etc/grub2-efi.cfg

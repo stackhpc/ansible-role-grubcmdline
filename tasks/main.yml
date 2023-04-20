@@ -60,24 +60,18 @@
   become: true
   changed_when: false
 
-- name: Look for grub configuration files
-  stat:
-   path: "{{ item }}"
-  register: grub_search
-  become: true
-  loop: "{{ grub_configuration_files }}"
-
 - name: replace current grub config
   copy:
     backup: "{{ backup_grub_config_file }}"
     # /etc/grub2.cfg -> ../boot/grub2/grub.cfg
     follow: true
     content: "{{ grub_mkconfig_result.stdout }}"
-    dest: "{{ item.stat.path }}"
-  when: item.stat.exists
+    dest: "{{ item }}"
   become: true
   register: grub_update_result
-  loop: "{{ grub_search.results }}"
+  with_items:
+    - /etc/grub2.cfg
+    - /etc/grub2-efi.cfg
   notify: "{{ kernel_restart_handler }}"
 
 - name: Update /boot/loader/entries with grubby
