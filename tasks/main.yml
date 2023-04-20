@@ -54,13 +54,14 @@
     backup: "{{ backup_grub_config_file }}"
   become: true
 
-- name: Generate new grub-config
+- name: Generate new grub-config (RedHat)
   command: grub2-mkconfig
   register: grub_mkconfig_result
   become: true
   changed_when: false
+  when: ansible_facts.os_family == "RedHat"
 
-- name: replace current grub config
+- name: replace current grub config (RedHat)
   copy:
     backup: "{{ backup_grub_config_file }}"
     # /etc/grub2.cfg -> ../boot/grub2/grub.cfg
@@ -73,3 +74,9 @@
     - /etc/grub2.cfg
     - /etc/grub2-efi.cfg
   notify: "{{ kernel_restart_handler }}"
+  when: ansible_facts.os_family == "RedHat"
+
+- name: Generate new grub config (Ubuntu/Debian)
+  command: /usr/sbin/update-grub
+  become: true
+  when: ansible_facts.os_family == "Debian"
