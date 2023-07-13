@@ -24,8 +24,8 @@
 - name: Set fact containing GRUB_CMDLINE_LINUX_DEFAULT
   set_fact:
     grub_cmdline_linux_default: >-
-      {{ grub_result.content | b64decode | regex_search('^GRUB_CMDLINE_LINUX_DEFAULT.*$', multiline=True)
-      | regex_replace('^GRUB_CMDLINE_LINUX_DEFAULT="(.*)"$', '\1') }}
+      {{ grub_result.content | b64decode | regex_findall('^GRUB_CMDLINE_LINUX_DEFAULT.*$', multiline=True)
+      | last | regex_replace('^GRUB_CMDLINE_LINUX_DEFAULT="(.*)"$', '\1') }}
 
 - debug:
     var: grub_cmdline_linux_default
