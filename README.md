@@ -1,3 +1,9 @@
+Notice
+======
+
+**This role has been moved to https://github.com/stackhpc/ansible-collection-linux/tree/main/roles/grubcmdline. Please contribute any
+patches to that collection.**
+
 stackhpc.grubcmdline
 ====================
 
